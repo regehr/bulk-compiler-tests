@@ -102,11 +102,12 @@ in stdenv.mkDerivation rec {
   postBuild = ''
     rm -fR $out
 
-    paxmark m bin/{lli,llvm-rtdyld}
-    paxmark m unittests/ExecutionEngine/MCJIT/MCJITTests
-    paxmark m unittests/ExecutionEngine/Orc/OrcJITTests
-    paxmark m unittests/Support/SupportTests
-    paxmark m bin/lli-child-target
+    # FIXME
+    #paxmark m bin/{lli,llvm-rtdyld}
+    #paxmark m unittests/ExecutionEngine/MCJIT/MCJITTests
+    #paxmark m unittests/ExecutionEngine/Orc/OrcJITTests
+    #paxmark m unittests/Support/SupportTests
+    #paxmark m bin/lli-child-target
   '';
 
   preCheck = ''
@@ -131,7 +132,8 @@ in stdenv.mkDerivation rec {
     ln -s $lib/lib/libLLVM.dylib $lib/lib/libLLVM-${release_version}.dylib
   '';
 
-  doCheck = stdenv.isLinux;
+  # doCheck = stdenv.isLinux;
+  doCheck = false;
 
   checkTarget = "check-all";
 
