@@ -33,9 +33,12 @@ in stdenv.mkDerivation rec {
 
   unpackPhase = ''
     unpackFile ${src}
-    mv llvm-${version}* llvm
+    mv llvm-rHEAD llvm
     sourceRoot=$PWD/llvm
     unpackFile ${compiler-rt_src}
+    # why do we have to do this?
+    chmod -R u+rwX compiler-rt-*
+    chmod -R u+rwX $sourceRoot
     mv compiler-rt-* $sourceRoot/projects/compiler-rt
   '';
 
