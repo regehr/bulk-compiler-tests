@@ -1,17 +1,20 @@
-{ lowPrio, newScope, stdenv, cmake, libxml2, python2, isl, fetchurl, overrideCC, wrapCC, darwin, ccWrapperFun }:
-let
-  callPackage = newScope (self // { inherit stdenv cmake libxml2 python2 isl release_version version fetch; });
+# { lowPrio, newScope, stdenv, cmake, libxml2, python2, isl, fetchurl, overrideCC, wrapCC, darwin, ccWrapperFun }:
 
-  release_version = "4.0.1";
+with import <nixpkgs>{};
+
+let
+  callPackage = newScope (self // { inherit stdenv cmake libxml2 python2 isl release_version version fetch fetchsvn; });
+
+  release_version = "HEAD";
   version = release_version; # differentiating these is important for rc's
 
-  fetch = name: sha256: fetchurl {
-    url = "http://llvm.org/releases/${release_version}/${name}-${version}.src.tar.xz";
-    inherit sha256;
+  fetch = loc: fetchsvn {
+    url = "http://llvm.org/svn/llvm-project/${loc}/trunk";
+    rev = "HEAD";
   };
 
-  compiler-rt_src = fetch "compiler-rt" "0h5lpv1z554szi4r4blbskhwrkd78ir50v3ng8xvk1s86fa7gj53";
-  clang-tools-extra_src = fetch "clang-tools-extra" "1dhmp7ccfpr42bmvk3kp37ngjpf3a9m5d4kkpsn7d00hzi7fdl9m";
+  compiler-rt_src = fetch "compiler-rt";
+  clang-tools-extra_src = fetch "clang-tools-extra";
 
   # Add man output without introducing extra dependencies.
   overrideManOutput = drv:

@@ -10,7 +10,7 @@
 stdenv.mkDerivation {
   name = "openmp-${version}";
 
-  src = fetch "openmp" "195dykamd39yhi5az7nqj3ksqhb3wq30l93jnfkxl0061qbknsgc";
+  src = fetch "openmp";
 
   nativeBuildInputs = [ cmake perl ];
   buildInputs = [ llvm ];
