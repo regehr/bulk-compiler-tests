@@ -10,10 +10,12 @@ let
 
     unpackPhase = ''
       unpackFile ${fetch "cfe"}
-      mv cfe-${version}* clang
+      chmod -R a+rwX cfe-rHEAD
+      mv cfe-rHEAD clang
       sourceRoot=$PWD/clang
       unpackFile ${clang-tools-extra_src}
-      mv clang-tools-extra-* $sourceRoot/tools/extra
+      chmod -R a+rwX clang-tools-extra-rHEAD
+      mv clang-tools-extra-rHEAD $sourceRoot/tools/extra
     '';
 
     nativeBuildInputs = [ cmake python ]
@@ -35,7 +37,7 @@ let
     ++ stdenv.lib.optional stdenv.isLinux "-DGCC_INSTALL_PREFIX=${gcc}"
     ++ stdenv.lib.optional (stdenv.cc.libc != null) "-DC_INCLUDE_DIRS=${stdenv.cc.libc}/include";
 
-    patches = [ ./purity.patch ];
+    patches = [ ];
 
     postBuild = stdenv.lib.optionalString enableManpages ''
       cmake --build . --target docs-clang-man
