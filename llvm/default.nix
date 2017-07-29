@@ -55,7 +55,7 @@ let
 
     lld = callPackage ./lld.nix {};
 
-    lldb = callPackage ./lldb.nix {};
+    # lldb = callPackage ./lldb.nix {};
 
     libcxx = callPackage ./libc++ {};
 
