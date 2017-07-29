@@ -44,8 +44,8 @@ let
     '';
 
     postPatch = ''
-      sed -i -e 's/Args.hasArg(options::OPT_nostdlibinc)/true/' lib/Driver/ToolChains/*.cpp
       sed -i -e 's/DriverArgs.hasArg(options::OPT_nostdlibinc)/true/' lib/Driver/ToolChains/*.cpp
+      sed -i -e 's/Args.hasArg(options::OPT_nostdlibinc)/true/' lib/Driver/ToolChains/*.cpp
 
       # Patch for standalone doc building
       sed -i '1s,^,find_package(Sphinx REQUIRED)\n,' docs/CMakeLists.txt
@@ -58,7 +58,7 @@ let
     # Clang expects to find sanitizer libraries in its own prefix
     postInstall = ''
       ln -sv ${llvm}/lib/LLVMgold.so $out/lib
-      ln -sv ${llvm}/lib/clang/${release_version}/lib $out/lib/clang/${release_version}/
+      ln -sv ${llvm}/lib/clang/6.0.0/lib $out/lib/clang/6.0.0/
       ln -sv $out/bin/clang $out/bin/cpp
 
       mkdir -p $python/bin $python/share/clang/

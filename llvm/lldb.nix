@@ -19,7 +19,7 @@ stdenv.mkDerivation {
 
   src = fetch "lldb";
 
-  patches = [ ./lldb-libedit.patch ];
+  patches = [ ];
   postPatch = ''
     # Fix up various paths that assume llvm and clang are installed in the same place
     sed -i 's,".*ClangConfig.cmake","${clang-unwrapped}/lib/cmake/clang/ClangConfig.cmake",' \
