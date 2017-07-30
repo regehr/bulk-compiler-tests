@@ -1,7 +1,8 @@
 # { lowPrio, newScope, stdenv, cmake, libxml2, python2, isl, fetchurl, overrideCC, wrapCC, darwin, ccWrapperFun }:
 
-with import <nixpkgs>{};
+{ pkgs ? (import <nixpkgs> {}) }:
 
+with pkgs;
 let
   callPackage = newScope (self // { inherit stdenv cmake libxml2 python2 isl release_version version fetch fetchsvn; });
 
