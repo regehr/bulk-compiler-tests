@@ -15,7 +15,8 @@ sub build($) {
     }
     close INF;
     close OUTF;
-    my $r = system "nix-build new.nix > logs/$p.log";
+    print "$p\n";
+    my $r = system "nix-build new.nix > logs/$p.log 2>&1";
     my $ret = $r >> 8;
     if ($ret == 0) {
         push @good, $p;
