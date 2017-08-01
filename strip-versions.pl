@@ -9,7 +9,7 @@ sub test($) {
     (my $line) = @_;
     return if $done{$line};
     $done{$line} = 1;
-    my $res = system "nix-env -i $line >/dev/null 2>&1";
+    my $res = system "nix-env -i $line >>log.txt 2>&1";
     print "$line $res\n";
     if ($res == 0) {
         $good{$line} = 1;
