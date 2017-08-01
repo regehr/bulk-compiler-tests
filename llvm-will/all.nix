@@ -231,7 +231,7 @@ in
 
   enableParallelBuilding = true;
 
-  doCheck = !false;
+  doCheck = false;
 
   # XXX: Only run default check target for now...
   #  checkTarget = "check-all";
