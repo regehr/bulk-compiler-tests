@@ -6,8 +6,6 @@
 , overrideTriple ? null
 }:
 
-assert !stdenv.isMusl; # This isn't patched for use w/musl, see all.nix
-
 let
   gcc = if stdenv.cc.isGNU then stdenv.cc.cc else stdenv.cc.cc.gcc;
   older_than_5 = stdenv.lib.versionOlder release_version "5";
@@ -35,7 +33,7 @@ let
       "-DLLVM_TOOLS_INSTALL_DIR=bin"
     ] ++
     # Maybe with compiler-rt this won't be needed?
-    (stdenv.lib.optional (stdenv.isLinux && !stdenv.isWLLVM) "-DGCC_INSTALL_PREFIX=${gcc}") ++
+    (stdenv.lib.optional (stdenv.isLinux && !false) "-DGCC_INSTALL_PREFIX=${gcc}") ++
     (stdenv.lib.optional (stdenv.cc.libc != null) "-DC_INCLUDE_DIRS=${stdenv.cc.libc}/include")
     ++ stdenv.lib.optionals (overrideTriple != null) [
       "-DLLVM_HOST_TRIPLE=${overrideTriple}"

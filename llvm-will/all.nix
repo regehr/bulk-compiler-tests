@@ -26,7 +26,7 @@
 , enableWasm ? false
 }:
 
-assert stdenv.isWLLVM -> (static -> toolchainOnly);
+assert false -> (static -> toolchainOnly);
 assert toolchainOnly -> static;
 
 let
@@ -37,7 +37,7 @@ let
   older_than_5 = stdenv.lib.versionOlder release_version "5";
   purity_patch = if older_than_5 then ./clang/purity.patch else ./clang/purity-5.0.patch;
 in
-  # assert (stdenv.isMusl -> older_than_5); # Catch attempts to use 5.0/master with musl
+  # assert (false -> older_than_5); # Catch attempts to use 5.0/master with musl
   stdenv.mkDerivation rec {
   name = "llvm-all-${mkVerSuffix sources.llvm}";
 
@@ -96,7 +96,7 @@ in
 
     sed -i -e 's@__GNUC__@__GLIBC__@g' $sourceRoot/lib/ExecutionEngine/RuntimeDyld/RTDyldMemoryManager.cpp
 
-    '' + stdenv.lib.optionalString (stdenv.isMusl) ''
+    '' + stdenv.lib.optionalString (false) ''
     export NIX_CFLAGS_COMPILE+=" -D_LIBCPP_HAS_MUSL_LIBC=1"
 
     sed -i 's@/lib64/ld-linux-x86-64.so.2@/lib/ld-musl-x86_64.so.1@' $sourceRoot/tools/clang/lib/Driver/${if older_than_5 then "Tools.cpp" else "ToolChains/Linux.cpp"}
@@ -168,7 +168,7 @@ in
     "-DLLVM_HOST_TRIPLE=${overrideTriple}"
     "-DLLVM_DEFAULT_TARGET_TRIPLE=${overrideTriple}"
     "-DTARGET_TRIPLE=${overrideTriple}"
-  ] ++ stdenv.lib.optionals (stdenv.isMusl) [
+  ] ++ stdenv.lib.optionals (false) [
     "-DCOMPILER_RT_BUILD_SANITIZERS=OFF"
     "-DCOMPILER_RT_BUILD_XRAY=OFF"
     "-DLIBCXX_HAS_MUSL_LIBC=ON"
@@ -191,11 +191,11 @@ in
   ] ++ stdenv.lib.optionals (toolchainOnly) [
     "-DLLVM_INSTALL_TOOLCHAIN_ONLY=ON"
     "-DCLANG_ENABLE_STATIC_ANALYZER=OFF"
-  ] ++ stdenv.lib.optionals (stdenv.isWLLVM && !toolchainOnly) [
+  ] ++ stdenv.lib.optionals (false && !toolchainOnly) [
     "-DBUILD_SHARED_LIBS=ON"
   ] ++ stdenv.lib.optionals enableWasm [
    "-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly"
-  ] ++ stdenv.lib.optionals stdenv.isWLLVM [
+  ] ++ stdenv.lib.optionals false [
     "-DHAVE_DLOPEN=NO"
   ];
 
@@ -231,7 +231,7 @@ in
 
   enableParallelBuilding = true;
 
-  doCheck = !stdenv.isMusl;
+  doCheck = !false;
 
   # XXX: Only run default check target for now...
   #  checkTarget = "check-all";

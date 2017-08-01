@@ -9,10 +9,6 @@ nix-build
 
 ## TODO
 
-- find the latest rev of LLVM and check it out consistently, as
-  opposed to separately checking out the head of all subprojects;
-  see scripts from Will; get checksums back into the nix code
-
 - make sure everything runs with Nix sandboxing turned on
 
 - figure out why LLVM is getting built twice

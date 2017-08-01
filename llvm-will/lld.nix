@@ -17,7 +17,7 @@
 , overrideTriple ? null
 , buildSlim ? false
 , enableAssertions? true
-, enableFFI ? !stdenv.isWLLVM && !buildSlim
+, enableFFI ? !false && !buildSlim
 }:
 
 stdenv.mkDerivation rec {
@@ -52,7 +52,7 @@ stdenv.mkDerivation rec {
 
   patches = llvm_patches;
 
-  prePatch = stdenv.lib.optionalString stdenv.isMusl ''
+  prePatch = stdenv.lib.optionalString false ''
     sed -i 's@^#if defined(HAVE_POSIX_FALLOCATE)@#if 0@' $sourceRoot/lib/Support/Unix/Path.inc
   '';
 
@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
     "-DLLVM_HOST_TRIPLE=${overrideTriple}"
     "-DLLVM_DEFAULT_TARGET_TRIPLE=${overrideTriple}"
     "-DTARGET_TRIPLE=${overrideTriple}"
-  ] ++ stdenv.lib.optionals (stdenv.isMusl) [
+  ] ++ stdenv.lib.optionals (false) [
     "-DCOMPILER_RT_BUILD_SANITIZERS=OFF"
     "-DCOMPILER_RT_BUILD_XRAY=OFF"
   ];

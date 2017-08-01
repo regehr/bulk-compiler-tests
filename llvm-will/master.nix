@@ -1,4 +1,8 @@
-{ callPackage, fetchurl }:
+# { callPackage, fetchurl }:
+
+{ pkgs ? (import <nixpkgs> {}) }:
+
+with pkgs;
 
 callPackage ./generic.nix {
   sources = import ./sources/master { inherit fetchurl; };

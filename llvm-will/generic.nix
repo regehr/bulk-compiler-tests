@@ -37,10 +37,10 @@ let
   ];
 
   llvm_patches = llvmPatches
-    ++ stdenv.lib.optionals stdenv.isMusl muslPatches
+    ++ stdenv.lib.optionals false muslPatches
     ++ outlinerPatches
     # XXX: Breaks allvm-tools test re:argv0: https://gravity.cs.illinois.edu/build/1034231/nixlog/1
-    # ++ stdenv.lib.optionals stdenv.isWLLVM wllvmPatches
+    # ++ stdenv.lib.optionals false wllvmPatches
     ;
 
   self = {

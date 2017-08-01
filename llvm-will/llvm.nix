@@ -18,7 +18,7 @@
 , buildSlim ? false
 , enableAssertions? true
 , enableWasm ? true
-, enableFFI ? !stdenv.isWLLVM && !buildSlim
+, enableFFI ? !false && !buildSlim
 }:
 
 stdenv.mkDerivation rec {
@@ -85,12 +85,12 @@ stdenv.mkDerivation rec {
     "-DLLVM_HOST_TRIPLE=${overrideTriple}"
     "-DLLVM_DEFAULT_TARGET_TRIPLE=${overrideTriple}"
     "-DTARGET_TRIPLE=${overrideTriple}"
-  ] ++ stdenv.lib.optionals (stdenv.isMusl) [
+  ] ++ stdenv.lib.optionals (false) [
     "-DCOMPILER_RT_BUILD_SANITIZERS=OFF"
     "-DCOMPILER_RT_BUILD_XRAY=OFF"
   ] ++ stdenv.lib.optionals enableWasm [
    "-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly"
-  ] ++ stdenv.lib.optionals stdenv.isWLLVM [
+  ] ++ stdenv.lib.optionals false [
     "-DHAVE_DLOPEN=NO"
   ];
 
