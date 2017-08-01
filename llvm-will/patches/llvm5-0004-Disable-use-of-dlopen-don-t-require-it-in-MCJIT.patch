@@ -1,0 +1,65 @@
+From a2914109ce54c0a5f7654a16ba63a86a94c52534 Mon Sep 17 00:00:00 2001
+From: Will Dietz <w@wdtz.org>
+Date: Sun, 11 Jun 2017 14:47:58 -0500
+Subject: [PATCH] Disable use of dlopen(), don't require it in MCJIT.
+
+---
+ lib/ExecutionEngine/ExecutionEngine.cpp | 5 -----
+ lib/ExecutionEngine/MCJIT/MCJIT.cpp     | 3 +--
+ lib/Support/Unix/DynamicLibrary.inc     | 3 ++-
+ 3 files changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/lib/ExecutionEngine/ExecutionEngine.cpp b/lib/ExecutionEngine/ExecutionEngine.cpp
+index 2ee72f9a8c1..12650022edc 100644
+--- a/lib/ExecutionEngine/ExecutionEngine.cpp
++++ b/lib/ExecutionEngine/ExecutionEngine.cpp
+@@ -511,11 +511,6 @@ EngineBuilder::setSymbolResolver(std::unique_ptr<JITSymbolResolver> SR) {
+ ExecutionEngine *EngineBuilder::create(TargetMachine *TM) {
+   std::unique_ptr<TargetMachine> TheTM(TM); // Take ownership.
+ 
+-  // Make sure we can resolve symbols in the program as well. The zero arg
+-  // to the function tells DynamicLibrary to load the program, not a library.
+-  if (sys::DynamicLibrary::LoadLibraryPermanently(nullptr, ErrorStr))
+-    return nullptr;
+-
+   // If the user specified a memory manager but didn't specify which engine to
+   // create, we assume they only want the JIT, and we fail if they only want
+   // the interpreter.
+diff --git a/lib/ExecutionEngine/MCJIT/MCJIT.cpp b/lib/ExecutionEngine/MCJIT/MCJIT.cpp
+index ff8749fbfed..14f5426de7f 100644
+--- a/lib/ExecutionEngine/MCJIT/MCJIT.cpp
++++ b/lib/ExecutionEngine/MCJIT/MCJIT.cpp
+@@ -22,7 +22,6 @@
+ #include "llvm/MC/MCAsmInfo.h"
+ #include "llvm/Object/Archive.h"
+ #include "llvm/Object/ObjectFile.h"
+-#include "llvm/Support/DynamicLibrary.h"
+ #include "llvm/Support/ErrorHandling.h"
+ #include "llvm/Support/MemoryBuffer.h"
+ #include "llvm/Support/MutexGuard.h"
+@@ -49,7 +48,7 @@ MCJIT::createJIT(std::unique_ptr<Module> M,
+   // Try to register the program as a source of symbols to resolve against.
+   //
+   // FIXME: Don't do this here.
+-  sys::DynamicLibrary::LoadLibraryPermanently(nullptr, nullptr);
++  // sys::DynamicLibrary::LoadLibraryPermanently(nullptr, nullptr);
+ 
+   if (!MemMgr || !Resolver) {
+     auto RTDyldMM = std::make_shared<SectionMemoryManager>();
+diff --git a/lib/Support/Unix/DynamicLibrary.inc b/lib/Support/Unix/DynamicLibrary.inc
+index aad77f19c35..d1ace37800b 100644
+--- a/lib/Support/Unix/DynamicLibrary.inc
++++ b/lib/Support/Unix/DynamicLibrary.inc
+@@ -11,7 +11,8 @@
+ //
+ //===----------------------------------------------------------------------===//
+ 
+-#if defined(HAVE_DLFCN_H) && defined(HAVE_DLOPEN)
++#if 0
++// #if defined(HAVE_DLFCN_H) && defined(HAVE_DLOPEN)
+ #include <dlfcn.h>
+ 
+ DynamicLibrary::HandleSet::~HandleSet() {
+-- 
+2.11.0
+

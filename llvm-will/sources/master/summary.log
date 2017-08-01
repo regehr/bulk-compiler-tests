@@ -1,0 +1,33 @@
+clang: (refs/heads/master)
+	latest commit:   7e4d8e97893421221fcc523aa5d118aab36bee0f
+	prefetch-sha256: 0b019xhffksbrk2alrxl7am8ywfrkvbark08j6yjrzn5n2kzmsb9
+	svn rev: 309713
+compiler-rt: (refs/heads/master)
+	latest commit:   1a764aafc6f0c5a78c77e5125bc40507db8ed5f7
+	prefetch-sha256: 1nm76rq2x3psj0spvcz7h2ra2cazry74dnhxkqk5xkcvpn34w5hm
+	svn rev: 309704
+clang-tools-extra: (refs/heads/master)
+	latest commit:   03e5e4777837d76c33ca1d9c9085461ee94a8656
+	prefetch-sha256: 0irr0mcx6lps8qmkl8hk9ymiqr5aqvc299hdflfldcxhxw9kxl6p
+	svn rev: 309705
+llvm: (refs/heads/master)
+	latest commit:   8ae6d2810054e7edaad44ddb0cea1a309afec35b
+	prefetch-sha256: 1y5vybygglhq2v62wahz7wi7rcwhjsy8fqsj11f7hcvpiffq7cac
+	svn rev: 309715
+lld: (refs/heads/master)
+	latest commit:   2a5edfd318c5bb8d5a691e4c1903a8793274afec
+	prefetch-sha256: 1wynvmfyh9dr1nvxzaqwsi7hmyr05x6cwvwrj486v7g28hrswsck
+	svn rev: 309688
+libcxx: (refs/heads/master)
+	latest commit:   4876a73b0a667032d66cee0e8e4d4a5d4083bf3b
+	prefetch-sha256: 13vwdcah2ymdfbh428xdakhgxqvjkavnd5qzr1d7j4b2asiypjc6
+	svn rev: 309528
+libcxxabi: (refs/heads/master)
+	latest commit:   b90082274531c38eb75bb5d30aac876d338004ea
+	prefetch-sha256: 1731qw9s7plam7k94n0s2lfkvf9l58q7zczyiss9jlkfdl71z03y
+	svn rev: 309650
+libunwind: (refs/heads/master)
+	latest commit:   36c1a03b74e1eddbbc844b08dcf74c94556613ea
+	prefetch-sha256: 1lanhm49f1ybvbcq8va5f2zycm0abkwzp0ynlpsgxym26v24a14b
+	svn rev: 309147
+max svn rev: 309715

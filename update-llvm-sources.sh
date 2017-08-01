@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 function error_exit {
   echo "ERROR: $1" 1>&2
@@ -8,8 +8,8 @@ function error_exit {
 which nix-prefetch-url >& /dev/null || \
   error_exit "Unable to find 'nix-prefetch-url', make sure you have nix installed and available!"
 
-ROOT=$(readlink -f $(dirname $0)/..)
-LLVM="$ROOT/pkgs/development/compilers/llvm/master"
+ROOT=$(readlink -f $(dirname $0))
+LLVM="$ROOT/llvm-will"
 
 BRANCH=${1:-master}
 REF="refs/heads/$BRANCH"

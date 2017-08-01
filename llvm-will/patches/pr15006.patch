@@ -1,0 +1,27 @@
+From aa6fba599b09e9a6c0840fcf9131695937161c2c Mon Sep 17 00:00:00 2001
+From: Will Dietz <w@wdtz.org>
+Date: Mon, 26 Jun 2017 12:43:55 -0500
+Subject: [PATCH] assert re:integer conversion behavior (PR15006)
+
+There are likely other instances, but this at least
+demonstrates the issue and is triggered by the
+two "huge stack" (offset) lit tests.
+---
+ lib/Target/X86/X86FrameLowering.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lib/Target/X86/X86FrameLowering.cpp b/lib/Target/X86/X86FrameLowering.cpp
+index 2777fa89330..5ab0d053740 100644
+--- a/lib/Target/X86/X86FrameLowering.cpp
++++ b/lib/Target/X86/X86FrameLowering.cpp
+@@ -1713,6 +1713,7 @@ int X86FrameLowering::getFrameIndexReference(const MachineFunction &MF, int FI,
+   // We need to factor in additional offsets applied during the prologue to the
+   // frame, base, and stack pointer depending on which is used.
+   int Offset = MFI.getObjectOffset(FI) - getOffsetOfLocalArea();
++  assert((Offset + getOffsetOfLocalArea()) == MFI.getObjectOffset(FI));
+   const X86MachineFunctionInfo *X86FI = MF.getInfo<X86MachineFunctionInfo>();
+   unsigned CSSize = X86FI->getCalleeSavedFrameSize();
+   uint64_t StackSize = MFI.getStackSize();
+-- 
+2.11.0
+

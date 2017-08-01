@@ -1,0 +1,19 @@
+Cleanup tasks:
+
+* Refactor:
+  * patches (and when they're used)
+  * config options (and when they're used)
+* Fix the madness that is libcxx/libcxxabi standalone building atm
+* overrideTriple: Separate setting host triple vs target triple!
+* Separate /using/ LLVM/clang/libcxx (as dependencies) vs building with them (as toolchain):
+  * setup-hook doesn't make sense when not acting as a toolchain.
+  * Allow using tools like clang-format without necessarily using clang as the compiler.
+* Fix using clang-format and similar, we need wrappers for these so they can find their include paths and such.
+* Get rid of the libcxx setup-hook entirely, leave this to wrappers to handle.
+* Update to match improvements/changes made upstream to 3.8/3.9
+* Split projects again, looks like upstream has been working on standalone builds.
+  (But for now leaving things combined to make sure they work...)
+* Leverage improved build support in LLVM/Clang--I haven't followed it closely but
+  they now support things involving multi-stage builds and a CMake cache.
+* Use clang's "universal driver" support (or configuration file support, if that gets added)
+  to avoid the various complete rebuilds we do while building for/against musl.

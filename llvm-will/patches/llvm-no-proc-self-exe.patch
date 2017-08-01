@@ -1,0 +1,27 @@
+From 64ea9bd797d516eafaa1a19289f5584b590d7142 Mon Sep 17 00:00:00 2001
+From: Will Dietz <w@wdtz.org>
+Date: Wed, 26 Jul 2017 08:10:39 -0500
+Subject: [PATCH] Patch.inc: Hardcode method used for self-lookup, don't use
+ /proc/
+
+---
+ lib/Support/Unix/Path.inc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/lib/Support/Unix/Path.inc b/lib/Support/Unix/Path.inc
+index e0b11aaff00..d109b3c112e 100644
+--- a/lib/Support/Unix/Path.inc
++++ b/lib/Support/Unix/Path.inc
+@@ -162,7 +162,8 @@ std::string getMainExecutable(const char *argv0, void *MainAddr) {
+   }
+ #elif defined(__FreeBSD__) || defined (__NetBSD__) || defined(__Bitrig__) || \
+       defined(__OpenBSD__) || defined(__minix) || defined(__DragonFly__) || \
+-      defined(__FreeBSD_kernel__) || defined(_AIX)
++      defined(__FreeBSD_kernel__) || defined(_AIX) || \
++      1 // Don't use /proc/self/exe on ALLVM, not yet supported
+   char exe_path[PATH_MAX];
+ 
+   if (getprogpath(exe_path, argv0) != NULL)
+-- 
+2.13.3
+
