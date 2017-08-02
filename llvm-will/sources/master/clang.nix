@@ -1,6 +1,6 @@
 {
   name = "clang";
-  rev = "7e4d8e97893421221fcc523aa5d118aab36bee0f";
-  sha256 = "0b019xhffksbrk2alrxl7am8ywfrkvbark08j6yjrzn5n2kzmsb9";
-  svn_rev = "309713";
+  rev = "d9009e558ab4d45eefae9d11d24951a61c3bb54b";
+  sha256 = "19slg8kp1sfjglq3clwyww1igkakn8kz25d7b8yq5baa1jcikgjj";
+  svn_rev = "309815";
 }

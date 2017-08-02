@@ -4,6 +4,9 @@
 , llvmPatches ? []
 }:
 let
+
+  foo = false;
+
   callPackage = newScope (self // {
     inherit stdenv release_version sources;
     inherit overrideTriple;
@@ -46,9 +49,9 @@ let
   self = {
     llvm = callPackage ./llvm.nix { inherit llvm_patches; };
 
-    lld = callPackage ./lld.nix { inherit llvm_patches; };
+    # lld = callPackage ./lld.nix { inherit llvm_patches; };
 
-    lld-standlone = callPackage ./lld-standalone.nix {};
+    # lld-standlone = callPackage ./lld-standalone.nix {};
 
     clang-unwrapped = callPackage ./clang {};
 
@@ -62,7 +65,7 @@ let
       inherit llvm_patches;
       static = true;
       toolchainOnly = true;
-      withLLD = true;
+      withLLD = false;
     };
 
     ## libcxx = callPackage ./libc++ {};
@@ -71,7 +74,7 @@ let
 
     lit = callPackage ./lit.nix {};
 
-    opt-viewer = callPackage ./opt-viewer.nix { };
+    ## opt-viewer = callPackage ./opt-viewer.nix { };
 
   };
 in self
