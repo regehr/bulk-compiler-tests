@@ -9,11 +9,11 @@ sub test($) {
     (my $line) = @_;
     return if $done{$line};
     $done{$line} = 1;
-    my $res = system "nix-env -i $line >>log.txt 2>&1";
-    print "$line $res\n";
-    if ($res == 0) {
-        $good{$line} = 1;
-    }
+    #my $res = system "nix-env -i $line >>log.txt 2>&1";
+    #print "$line $res\n";
+    #if ($res == 0) {
+    #    $good{$line} = 1;
+    #}
 }
 
 open INF, "<nixqa.txt" or die;
@@ -22,10 +22,16 @@ while (my $line = <INF>) {
     if ($line =~ /^(.*)\-[0-9]/) {
         my $n = $1;
         test($n);
+    } elsif ($line =~ /^(.*?)\-[0-9]/) {
+        my $n = $1;
+        test($n);
     } elsif ($line =~ /^(.*)\-v[0-9]/) {
         my $n = $1;
         test($n);
     } elsif ($line =~ /^(.*)\_[0-9]/) {
+        my $n = $1;
+        test($n);
+    } elsif ($line =~ /^(.*?)\_[0-9]/) {
         my $n = $1;
         test($n);
     } else {
@@ -35,7 +41,7 @@ while (my $line = <INF>) {
 close INF;
 
 open OUTF, ">all-packages.txt" or die;
-foreach my $k (sort keys %good) {
+foreach my $k (sort keys %done) {
     print OUTF "$k\n";
 }
 close OUTF;

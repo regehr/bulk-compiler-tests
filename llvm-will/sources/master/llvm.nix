@@ -1,6 +1,6 @@
 {
   name = "llvm";
-  rev = "749993640bf6072a68b0a52dbda5555944190beb";
-  sha256 = "0zsydqk9cyb0r7z7s1n9lqyn9wfkwhn11jwnab926rygl95prdnw";
-  svn_rev = "309825";
+  rev = "6b658aae9640ce35d9a917a5748d028211f32fbb";
+  sha256 = "1hljhvqraprjvy3ab7hmd601kij46rfl3bsgkc228vdbbmj1n8yi";
+  svn_rev = "309997";
 }

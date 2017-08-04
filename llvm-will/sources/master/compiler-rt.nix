@@ -1,6 +1,6 @@
 {
   name = "compiler-rt";
-  rev = "e18e52ff1c30d465661ecbd4bd873762ca70688a";
-  sha256 = "0j7ixrjbnl86ybpchab8flc58f0wm2z1jf3dn4wv98g1hi65zy06";
-  svn_rev = "309798";
+  rev = "8293838e866814d904640f6359954d00852f2421";
+  sha256 = "1qg010mk6wbvbd3md9radhcn7cfhkq29sgam6lr2bn18nrys1fbj";
+  svn_rev = "309974";
 }

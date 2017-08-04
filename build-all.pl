@@ -2,9 +2,6 @@
 
 use strict;
 
-my @good;
-my @bad;
-
 sub build($) {
     (my $p) = @_;
     open INF, "<template.nix" or die;
@@ -17,26 +14,17 @@ sub build($) {
     close OUTF;
     print "$p\n";
     my $r = system "nix-build new.nix > logs/$p.log 2>&1";
-    my $ret = $r >> 8;
-    if ($ret == 0) {
-        push @good, $p;
+    open OF, ">>logs/$p.log" or die;
+    if ($r == 0) {
+	print OF "\n\n\nSUCCESS\n";
     } else {
-        push @bad, $p;
+	print OF "\n\n\nFAIL\n";
     }
+    close OF;
 }
 
 open IN, "<all-packages.txt" or die;
 while (my $f = <IN>) {
     chomp $f;
     build($f);
-}
-
-print "\ngood: ";
-foreach my $p (@good) {
-    print "  $p\n";
-}
-
-print "\nbad: ";
-foreach my $p (@bad) {
-    print "  $p\n";
 }

@@ -1,6 +1,6 @@
 {
   name = "lld";
-  rev = "5932c621458706135d16ff0e98b2cf5f9e736e7b";
-  sha256 = "0krvjxiqbjz5yj3vssrikrkdwzl1dzbwrp8zfv5vl7r6p3bkjiwr";
-  svn_rev = "309796";
+  rev = "7302f2b949520b8fa405fc7e9a471245ff56069e";
+  sha256 = "1awn8adp32prlqr63ixw6fcb56qfyl7f1wbmmdadylzrw4pw9wgi";
+  svn_rev = "309989";
 }
